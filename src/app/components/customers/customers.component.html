@@ -1,0 +1,106 @@
+<div class="content">
+  <p-confirmDialog [style]="{width: '50vw'}"></p-confirmDialog>
+    <p-table
+    [ngStyle]="{'filter': isBlurry ? 'blur(5px)' : 'none'}"
+    #dt1
+    [responsive]="true"
+    responsiveLayout="scroll"
+    scrollHeight="flex"
+    [scrollable]="true"
+    [value]="customers"
+    [paginator]="true"
+    [rows]="10"
+    [showCurrentPageReport]="true"
+    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+    [rowsPerPageOptions]="[10, 25, 50]"
+    [globalFilterFields]="[
+      'musteriAdi',
+      'musteriAdres',
+      'kayitTarihi',
+      'yetkiliTelefon'
+    ]"
+  >
+  <ng-template pTemplate="caption">
+    <div class="flex">
+        <div class="searchdiv">
+            <button
+              pButton
+              label="Temizle"
+              class="p-button-outlined"
+              icon="pi pi-filter-slash"
+              (click)="clear(dt1)"
+            ></button>
+            <span class="p-input-icon-left ml-auto">
+              <i class="pi pi-search"></i>
+              <input
+                [(ngModel)]="searchtext"
+                pInputText
+                type="text"
+                (input)="dt1.filterGlobal(searchtext, 'contains')"
+                placeholder="Arama Sözcüğü"
+              />
+            </span>
+          </div>
+    </div>
+  </ng-template>
+  <ng-template pTemplate="header">
+    <tr>
+        <th pSortableColumn="musteriAdi" style="width: 25%">
+          Ad <p-sortIcon field="musteriAdi"></p-sortIcon>
+        </th>
+        <th pSortableColumn="musteriAdres" style="width: 25%">
+          Adres <p-sortIcon field="musteriAdres"></p-sortIcon>
+        </th>
+        <th pSortableColumn="kayitTarihi" style="width: 25%">
+          Kayıt Tarihi <p-sortIcon field="kayitTarihi"></p-sortIcon>
+        </th>
+        <th pSortableColumn="yetkiliTelefon" style="width: 25%">
+          Telefon Numarası <p-sortIcon field="yetkiliTelefon"></p-sortIcon>
+        </th>
+        <th style="width: 25%">
+            Güncelle 
+          </th>
+          <th  style="width: 25%">
+            Sil
+          </th>
+      </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-customer>
+    <tr>
+        <td>{{customer.musteriAdi}}</td>
+        <td>{{customer.musteriAdres}}</td>
+        <td>{{customer.kayitTarihi}}</td>
+        <td>{{customer.yetkiliTelefon}}</td>
+        <td><p-button
+            (onClick)="update(customer)"
+            icon="pi pi-cog"
+            styleClass="p-button-outlined p-button-success p-button-sm"
+          ></p-button></td>
+          <td><p-button
+            (onClick)="confirmdelete(customer)"
+            icon="pi pi-times"
+            styleClass="p-button-outlined p-button-success p-button-sm"
+          ></p-button></td>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="emptymessage" *ngIf="!loading">
+    <tr>
+      <td style="text-align: center" colspan="7">No customers found.</td>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="paginatorleft">
+    <p-button
+      type="button"
+      icon="pi pi-plus"
+      styleClass="p-button-text"
+    ></p-button>
+  </ng-template>
+  <ng-template pTemplate="paginatorright">
+    <p-button
+      type="button"
+      icon="pi pi-cloud"
+      styleClass="p-button-text"
+    ></p-button>
+  </ng-template>
+</p-table>
+</div>

@@ -1,0 +1,85 @@
+<div *ngIf="updatelicence" style="height: 100%">
+  <table>
+    <tr>
+      <td>Müşteri Adı:</td>
+      <td>
+        <p-autoComplete
+          [(ngModel)]="selectedCustomerName"
+          [suggestions]="filteredCustomerName!"
+          (completeMethod)="filterCustomerName($event)"
+          field="musteriAdi"
+          placeholder="Müşteri Adı"
+          [dropdown]="true"
+        >
+        </p-autoComplete>
+      </td>
+    </tr>
+    <tr>
+      <td>Makine No:</td>
+      <td>
+        <p-autoComplete
+          [(ngModel)]="selectedMachineName"
+          [suggestions]="filteredMachineName!"
+          (completeMethod)="filterMachineName($event)"
+          field="machine_name"
+          placeholder="Makine No"
+          [dropdown]="true"
+        >
+        </p-autoComplete>
+      </td>
+    </tr>
+    <tr>
+      <td>Lisans Tarihi:</td>
+      <td>
+        <p-calendar
+          inputId="basic"
+          [(ngModel)]="updlcn!.request_date"
+        ></p-calendar>
+      </td>
+    </tr>
+    <tr>
+      <td>Makine No:</td>
+      <td>
+        <p-inputNumber
+          inputId="integeronly"
+          [min]="1"
+          [(ngModel)]="updlcn!.machine_no"
+          [useGrouping]="false"
+          placeholder="Makine No"
+        >
+        </p-inputNumber>
+      </td>
+    </tr>
+    <tr>
+      <td>Makine Key:</td>
+      <td>
+        <p-inputMask
+          mask="****-****-****-****"
+          [(ngModel)]="updlcn!.machine_key"
+          [style]="{ 'text-transform': 'uppercase' }"
+          placeholder="ABCD-EFGH-IJKL-MNOP"
+        ></p-inputMask>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="2" class="buttonrow">
+        <p-button
+          label="Ekle"
+          (onClick)="updateLicence(updlcn!)"
+          styleClass="p-button-success"
+          icon="pi pi-check"
+          *ngIf="updatelicence.id"
+        ></p-button>
+
+        <p-button
+          label="Onayla"
+          (onClick)="createLicence(updlcn!)"
+          styleClass="p-button-success"
+          icon="pi pi-check"
+          *ngIf="!updatelicence.id"
+        ></p-button>
+      </td>
+    </tr>
+  </table>
+  <p-messages></p-messages>
+</div>

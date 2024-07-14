@@ -1,0 +1,48 @@
+.content{
+    width: 93%;
+    margin-left: 5rem;
+}
+
+.searchdiv{
+    display: inline;
+    position: relative;
+    margin-left: 1rem;
+}
+button{
+    margin-right: 1rem;
+}
+
+p-dropdown{
+    position: absolute;
+    right: 3rem;
+}
+
+.filterlbl{
+    position: absolute;
+    right: 16rem;
+    top: 2rem;
+}
+
+@media screen and (max-width: 900px) and (min-width: 550) {
+    .searchdiv{
+        display: inline-block;
+    }
+}
+
+@media screen and (max-width: 550px) {
+    .content{
+        width: 100%;
+        margin-left: 5rem;
+        margin-top: 0;
+    }
+
+    button{
+        width: 6rem;
+        margin-right: 0;
+    }
+
+    input{
+        width: 10rem;
+    }
+    
+}

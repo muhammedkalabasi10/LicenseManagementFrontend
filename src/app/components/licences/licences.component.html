@@ -1,0 +1,126 @@
+<div class="content">
+  <p-table
+    #dt1
+    [responsive]="true"
+    responsiveLayout="scroll"
+    scrollHeight="flex"
+    [scrollable]="true"
+    [value]="
+      selectedOption?.code === 'B'
+        ? licences
+        : selectedOption?.code === 'OC'
+        ? onlyConfirmed
+        : onlyUnconfirmed
+    "
+    [paginator]="true"
+    [rows]="10"
+    [showCurrentPageReport]="true"
+    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+    [rowsPerPageOptions]="[10, 25, 50]"
+    [globalFilterFields]="[
+      'customer_name',
+      'machine_name',
+      'machine_key',
+      'machine_no',
+      'request_date'
+    ]"
+  >
+    <ng-template pTemplate="caption">
+      <div class="flex">
+        <p-button
+          label="Yeni"
+          (onClick)="show()"
+          icon="pi pi-plus"
+          styleClass="p-button-outlined p-button-warning"
+        ></p-button>
+        <div class="searchdiv">
+          <button
+            pButton
+            label="Temizle"
+            class="p-button-outlined"
+            icon="pi pi-filter-slash"
+            (click)="clear(dt1)"
+          ></button>
+          <span class="p-input-icon-left ml-auto">
+            <i class="pi pi-search"></i>
+            <input
+              [(ngModel)]="searchtext"
+              pInputText
+              type="text"
+              (input)="dt1.filterGlobal(searchtext, 'contains')"
+              placeholder="Arama Sözcüğü"
+            />
+          </span>
+        </div>
+        <label class="filterlbl" for="validopt">Filtre</label>
+        <p-dropdown
+          id="validopt"
+          [options]="options"
+          [(ngModel)]="selectedOption"
+          optionLabel="name"
+        ></p-dropdown>
+      </div>
+    </ng-template>
+    <ng-template pTemplate="header">
+      <tr>
+        <th pSortableColumn="customer_name" style="width: 25%">
+          Müşteri Adı <p-sortIcon field="customer_name"></p-sortIcon>
+        </th>
+        <th pSortableColumn="machine_name" style="width: 25%">
+          Makine No <p-sortIcon field="machine_name"></p-sortIcon>
+        </th>
+        <th pSortableColumn="machine_key" style="width: 25%">
+          Makine Key <p-sortIcon field="machine_key"></p-sortIcon>
+        </th>
+        <th pSortableColumn="machine_no" style="width: 25%">
+          Makine No <p-sortIcon field="machine_no"></p-sortIcon>
+        </th>
+        <th pSortableColumn="request_date" style="width: 25%">
+          Lisans Tarihi <p-sortIcon field="request_date"></p-sortIcon>
+        </th>
+        <th pSortableColumn="isValid" style="width: 25%">
+          Onay Durumu<p-sortIcon field="isValid"></p-sortIcon>
+        </th>
+      </tr>
+    </ng-template>
+
+    <ng-template pTemplate="body" let-licence>
+      <tr>
+        <td>{{ licence.customer_name }}</td>
+        <td>{{ licence.machine_name }}</td>
+        <td>{{ licence.machine_key }}</td>
+        <td>{{ licence.machine_no }}</td>
+        <td>{{ licence.request_date }}</td>
+        <td>
+          <i *ngIf="licence.isValid" style="color: green">Onaylandı</i>
+          <p-button
+            *ngIf="!licence.isValid"
+            (onClick)="show(licence)"
+            icon="pi pi-check"
+            styleClass="p-button-outlined p-button-success p-button-sm"
+          ></p-button>
+        </td>
+      </tr>
+    </ng-template>
+
+    <ng-template pTemplate="emptymessage" *ngIf="!loading">
+      <tr>
+        <td style="text-align: center" colspan="7">No customers found.</td>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="paginatorleft">
+      <p-button
+        type="button"
+        icon="pi pi-plus"
+        styleClass="p-button-text"
+      ></p-button>
+    </ng-template>
+    <ng-template pTemplate="paginatorright">
+      <p-button
+        type="button"
+        icon="pi pi-cloud"
+        styleClass="p-button-text"
+      ></p-button>
+    </ng-template>
+  </p-table>
+</div>
